@@ -4,32 +4,32 @@
 
 ## Stack Tecnológico
 
-* [cite_start]**Lenguaje:** Java 17 [cite: 23]
-* [cite_start]**Gestor de dependencias:** Apache Maven [cite: 24]
-* [cite_start]**Framework de Integración:** Apache Camel 4.x [cite: 25]
-* [cite_start]**Base de datos:** H2 (Embebida) [cite: 26]
+**Lenguaje:** Java 17 [cite: 23]
+**Gestor de dependencias:** Apache Maven [cite: 24]
+**Framework de Integración:** Apache Camel 4.x [cite: 25]
+**Base de datos:** H2 (Embebida) [cite: 26]
 
 ## Patrones Aplicados
 
-[cite_start]La integración se realiza implementando tres flujos principales que simulan la comunicación entre los sistemas de la empresa[cite: 11].
+La integración se realiza implementando tres flujos principales que simulan la comunicación entre los sistemas de la empresa[cite: 11].
 
-### [cite_start]1. Transferencia de Archivos (SensData → AgroAnalyzer) [cite: 12]
+### 1. Transferencia de Archivos (SensData → AgroAnalyzer) [cite: 12]
 
 * **Flujo:** Un componente `camel-file` monitorea la raíz del proyecto buscando el archivo `sensores.csv`.
 * **Proceso:** Al encontrarlo, la ruta lee el archivo, utiliza `camel-csv` para convertirlo en objetos Java, y luego `camel-jackson` para serializar esos objetos a un *string* JSON.
 * **Destino:** El string JSON se envía en memoria a través de un endpoint `direct:guardarEnDB` al siguiente módulo.
 
-### [cite_start]2. Base de Datos Compartida (AgroAnalyzer ↔ FieldControl) [cite: 13]
+### 2. Base de Datos Compartida (AgroAnalyzer ↔ FieldControl) [cite: 13]
 
 * **Flujo (Escritura):** La ruta `direct:guardarEnDB` (AgroAnalyzer) recibe el JSON, lo deserializa a una lista, y usa un `.split()` para procesar cada sensor individualmente.
 * **Proceso:** Cada registro se transforma en una sentencia SQL `INSERT` y se ejecuta en la base de datos H2 usando `camel-jdbc`.
 * **Flujo (Lectura):** Una ruta `timer:` (FieldControl) se dispara cada 10 segundos para consultar la base de datos con un `SELECT` y obtener la lectura más reciente.
 
-### [cite_start]3. Remote Procedure Call (RPC Simulado) (FieldControl → AgroAnalyzer) [cite: 14]
+### 3. Remote Procedure Call (RPC Simulado) (FieldControl → AgroAnalyzer) [cite: 14]
 
 * [cite_start]**Flujo:** Se simula una llamada síncrona (bloqueante) entre dos rutas de Camel[cite: 49].
 * **Cliente (`rpc-cliente`):** Una ruta `timer:` dispara un mensaje al endpoint `direct:solicitarLectura`. [cite_start]Esta ruta invoca al endpoint del servidor (`direct:rpc.obtenerUltimo`) y **espera** por una respuesta[cite: 50, 51, 55].
-* [cite_start]**Servidor (`rpc-servidor`):** La ruta `direct:rpc.obtenerUltimo` recibe la solicitud, invoca a la clase Java `ServicioAnalitica.java` usando `camel-bean` para obtener una respuesta JSON simulada, y la retorna al cliente[cite: 57, 58, 60, 61].
+* **Servidor (`rpc-servidor`):** La ruta `direct:rpc.obtenerUltimo` recibe la solicitud, invoca a la clase Java `ServicioAnalitica.java` usando `camel-bean` para obtener una respuesta JSON simulada, y la retorna al cliente[cite: 57, 58, 60, 61].
 
 ## Pasos de Ejecución
 
@@ -39,7 +39,7 @@ Sigue estos pasos para ejecutar el proyecto:
 
 * JDK 17 o superior.
 * Apache Maven.
-* [cite_start]Un IDE como IntelliJ IDEA o VS Code[cite: 26].
+* Un IDE como IntelliJ IDEA o VS Code[cite: 26].
 
 ### Configuración
 
