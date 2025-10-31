@@ -1,19 +1,19 @@
 # Examen Práctico - Integración AgroTech Solutions S.A.
 
-[cite_start]Este proyecto es la resolución del examen práctico para la integración de sistemas de la empresa AgroTech Solutions S.A.[cite: 2]. [cite_start]El objetivo es diseñar e implementar una solución funcional que conecte tres sistemas independientes (SensData, AgroAnalyzer y FieldControl) utilizando patrones clásicos de integración empresarial[cite: 9, 11].
+[cite_start]Este proyecto es la resolución del examen práctico para la integración de sistemas de la empresa AgroTech Solutions S.A.]. El objetivo es diseñar e implementar una solución funcional que conecte tres sistemas independientes (SensData, AgroAnalyzer y FieldControl) utilizando patrones clásicos de integración empresarial.
 
 ## Stack Tecnológico
 
-**Lenguaje:** Java 17 [cite: 23]
-**Gestor de dependencias:** Apache Maven [cite: 24]
-**Framework de Integración:** Apache Camel 4.x [cite: 25]
-**Base de datos:** H2 (Embebida) [cite: 26]
+**Lenguaje:** Java 17 
+**Gestor de dependencias:** Apache Maven 
+**Framework de Integración:** Apache Camel 4.x 
+**Base de datos:** H2 (Embebida) 
 
 ## Patrones Aplicados
 
-La integración se realiza implementando tres flujos principales que simulan la comunicación entre los sistemas de la empresa[cite: 11].
+La integración se realiza implementando tres flujos principales que simulan la comunicación entre los sistemas de la empres.
 
-### 1. Transferencia de Archivos (SensData → AgroAnalyzer) [cite: 12]
+### 1. Transferencia de Archivos (SensData → AgroAnalyzer) .
 
 * **Flujo:** Un componente `camel-file` monitorea la raíz del proyecto buscando el archivo `sensores.csv`.
 * **Proceso:** Al encontrarlo, la ruta lee el archivo, utiliza `camel-csv` para convertirlo en objetos Java, y luego `camel-jackson` para serializar esos objetos a un *string* JSON.
@@ -25,11 +25,11 @@ La integración se realiza implementando tres flujos principales que simulan la 
 * **Proceso:** Cada registro se transforma en una sentencia SQL `INSERT` y se ejecuta en la base de datos H2 usando `camel-jdbc`.
 * **Flujo (Lectura):** Una ruta `timer:` (FieldControl) se dispara cada 10 segundos para consultar la base de datos con un `SELECT` y obtener la lectura más reciente.
 
-### 3. Remote Procedure Call (RPC Simulado) (FieldControl → AgroAnalyzer) [cite: 14]
+### 3. Remote Procedure Call (RPC Simulado) (FieldControl → AgroAnalyzer) 
 
-* [cite_start]**Flujo:** Se simula una llamada síncrona (bloqueante) entre dos rutas de Camel[cite: 49].
-* **Cliente (`rpc-cliente`):** Una ruta `timer:` dispara un mensaje al endpoint `direct:solicitarLectura`. [cite_start]Esta ruta invoca al endpoint del servidor (`direct:rpc.obtenerUltimo`) y **espera** por una respuesta[cite: 50, 51, 55].
-* **Servidor (`rpc-servidor`):** La ruta `direct:rpc.obtenerUltimo` recibe la solicitud, invoca a la clase Java `ServicioAnalitica.java` usando `camel-bean` para obtener una respuesta JSON simulada, y la retorna al cliente[cite: 57, 58, 60, 61].
+* **Flujo:** Se simula una llamada síncrona (bloqueante) entre dos rutas de Camel[cite: 49].
+* **Cliente (`rpc-cliente`):** Una ruta `timer:` dispara un mensaje al endpoint `direct:solicitarLectura`. [cite_start]Esta ruta invoca al endpoint del servidor (`direct:rpc.obtenerUltimo`) y **espera** por una respuesta
+* **Servidor (`rpc-servidor`):** La ruta `direct:rpc.obtenerUltimo` recibe la solicitud, invoca a la clase Java `ServicioAnalitica.java` usando `camel-bean` para obtener una respuesta JSON simulada, y la retorna al cliente.
 
 ## Pasos de Ejecución
 
@@ -39,7 +39,7 @@ Sigue estos pasos para ejecutar el proyecto:
 
 * JDK 17 o superior.
 * Apache Maven.
-* Un IDE como IntelliJ IDEA o VS Code[cite: 26].
+* Un IDE como IntelliJ IDEA o VS Code.
 
 ### Configuración
 
